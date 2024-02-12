@@ -138,6 +138,7 @@
 				<version>6.6.0</version>
 				<executions>
 					<execution>
+						<phase>package</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>

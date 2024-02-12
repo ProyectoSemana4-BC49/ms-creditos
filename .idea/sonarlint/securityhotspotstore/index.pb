@@ -57,3 +57,8 @@ Gsrc/main/java/com/nttdatabc/mscreditos/controller/ReportController.java,f\1\f1
 Nsrc/main/java/com/nttdatabc/mscreditos/service/interfaces/MovementService.java,8\0\8046daf35dcf9fa7e662fde8aaca8621bf1f246b
 |
 Lsrc/main/java/com/nttdatabc/mscreditos/service/interfaces/ReportService.java,5\2\52da4a735cd8724fd5fa3bfb1a294752761b4867
+7
+HELP.md,1\a\1a273f73b7a477b0745593641bd708a6182c7ad5
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
