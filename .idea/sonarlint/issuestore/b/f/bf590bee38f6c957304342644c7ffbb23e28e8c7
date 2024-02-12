@@ -1,0 +1,11 @@
+
+}
+java:S1104"bMake VALUE_MIN_ACCOUNT_BANK a static final constant or non-public and provide accessors if needed.(É•¥Ëùÿÿÿÿ
+W
+java:S1444"<Make this "public static VALUE_MIN_ACCOUNT_BANK" field final(É•¥Ëùÿÿÿÿ
+|
+java:S3008"aRename this field "VALUE_MIN_ACCOUNT_BANK" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É•¥Ëùÿÿÿÿ
+U
+java:S1118":Add a private constructor to hide the implicit public one.(ÎÇÀÂüÿÿÿÿ
+\
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(ÓŠ«Œøÿÿÿÿ

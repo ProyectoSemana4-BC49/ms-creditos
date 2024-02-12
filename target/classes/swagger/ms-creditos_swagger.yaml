@@ -1,0 +1,383 @@
+openapi: 3.0.1
+info:
+  title: Microservicio de Créditos
+  version: 1.0.0
+  description: |-
+    El Microservicio de Créditos es una API diseñada para gestionar y administrar créditos y movimientos relacionados con créditos. Proporciona endpoints para realizar operaciones como obtener información de créditos, insertar nuevos créditos, actualizar créditos existentes, eliminar créditos, obtener movimientos de créditos, crear nuevos movimientos, pagar cuotas de movimientos y más. Este microservicio es una herramienta poderosa para el seguimiento y control de préstamos y movimientos financieros asociados.
+  termsOfService: https://www.example.com/terms
+  contact:
+    email: vertkle@gmail.com
+  license:
+    name: Licencia MIT
+    url: https://www.example.com/license
+servers:
+  - url: http://localhost:8080/api/v1
+paths:
+  /credits:
+    get:
+      operationId: getAllCredits
+      summary: Obtener todos los créditos
+      tags:
+        - Créditos
+      responses:
+        '200':
+          description: Lista de créditos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Credit'
+    post:
+      operationId: createCredit
+      summary: Insertar un nuevo crédito
+      tags:
+        - Créditos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+      responses:
+        '201':
+          description: Crédito insertado exitosamente
+        '400':
+          description: Error en request
+    put:
+      operationId: updateCredit
+      summary: Actualizar un crédito existente
+      tags:
+        - Créditos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+      responses:
+        '200':
+          description: Actualizado correctamente
+        '400':
+          description: Error en el request
+        '404':
+          description: Recurso no encontrado
+
+  /credits/{credit_id}:
+    get:
+      operationId: getCreditById
+      summary: Trae información de un crédito según su credit_id
+      tags:
+        - Créditos
+      parameters:
+        - in: path
+          name: credit_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Crédito obtenido correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credit'
+        '400':
+          description: Error en Request
+        '404':
+          description: Recurso no encontrado
+    delete:
+      operationId: deleteCreditById
+      summary: Eliminar un crédito por ID
+      tags:
+        - Créditos
+      parameters:
+        - in: path
+          name: credit_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Crédito eliminado exitosamente
+        '400':
+          description: Error en Request
+        '404':
+          description: Recurso no encontrado
+
+  /credits/customer/{customer_id}:
+    get:
+      operationId: getCreditsByCustomerId
+      summary: Obtener los créditos por ID de cliente
+      tags:
+        - Créditos
+      parameters:
+        - in: path
+          name: customer_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de créditos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Credit'
+
+  /movement_credits:
+    post:
+      operationId: createMovementCredit
+      summary: Crear un nuevo movimiento de crédito
+      tags:
+        - Movimientos Créditos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovementCredit'
+      responses:
+        '201':
+          description: Movimiento de crédito creado exitosamente
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+    put:
+      operationId: updateMovementCredit
+      summary: Actualizar un movimiento de crédito existente
+      tags:
+        - Movimientos Créditos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MovementCredit'
+      responses:
+        '200':
+          description: Movimiento de crédito actualizado exitosamente
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /movement_credits/{movement_id}:
+    get:
+      operationId: getMovementCreditById
+      summary: Obtener un movimiento de crédito por ID
+      tags:
+        - Movimientos Créditos
+      parameters:
+        - in: path
+          name: movement_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movimiento de crédito obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MovementCredit'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+    delete:
+      operationId: deleteMovementCredit
+      summary: Eliminar un movimiento de crédito
+      tags:
+        - Movimientos Créditos
+      parameters:
+        - in: path
+          name: movement_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Movimiento de crédito eliminado exitosamente
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /movement_credits/credit/{credit_id}:
+    get:
+      operationId: getMovementsCreditsByCreditId
+      summary: Obtener los movimientos por ID de crédito
+      tags:
+        - Movimientos Créditos
+      parameters:
+        - in: path
+          name: credit_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de movimientos obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovementCredit'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /movement_credits/paid_installments/{movement_id}:
+    post:
+      operationId: createPaymentInstallmentByMovementId
+      summary: Pagar una cuota de un movimiento de crédito
+      tags:
+        - Movimientos Créditos
+      parameters:
+        - in: path
+          name: movement_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaidInstallment'
+      responses:
+        '201':
+          description: Cuota pagada exitosamente
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /report_credit/balance/{customer_id}:
+    get:
+      operationId: getBalanceCredit
+      summary: Obtener resumen de saldos promedios del mes en curso de los productos crediticios.
+      tags:
+        - Reportes
+      parameters:
+        - name: customer_id
+          in: path
+          description: ID del cliente
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reporte de saldos promedios.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceAccounts'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+  /report_credit/last_movements_card_credit/{credit_id}:
+    get:
+      operationId: getLastMovementsCardCredit
+      summary: Obtener los ultimos 10 movimientos de la tarjeta de crédito.
+      tags:
+        - Reportes
+      parameters:
+        - name: credit_id
+          in: path
+          description: ID del crédito
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Reporte de saldos promedios.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovementCredit'
+        '400':
+          description: Error en request
+        '404':
+          description: Recurso no encontrado
+
+
+
+
+components:
+  schemas:
+    Credit:
+      type: object
+      properties:
+        _id:
+          type: string
+        customer_id:
+          type: string
+        type_credit:
+          type: string
+        mount_limit:
+          type: number
+        date_open:
+          type: string
+        interest_rate:
+          type: number
+
+    MovementCredit:
+      type: object
+      properties:
+        _id:
+          type: string
+        credit_id:
+          type: string
+        total_installments:
+          type: integer
+        amount:
+          type: number
+        status:
+          type: string
+        day_created:
+          type: string
+        due_date:
+          type: string
+        paid_installments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaidInstallment'
+
+    PaidInstallment:
+      type: object
+      properties:
+        _id:
+          type: string
+        date_payment:
+          type: string
+        amount:
+          type: number
+        installment_number:
+          type: integer
+    BalanceAccounts:
+      type: object
+      properties:
+        customerId:
+          type: string
+        summary_accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/SummaryAccountBalance"
+    SummaryAccountBalance:
+      type: object
+      properties:
+        account_id:
+          type: string
+        balanceAvg:
+          type: number
