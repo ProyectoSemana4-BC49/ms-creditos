@@ -19,7 +19,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -30,9 +29,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
-
-
+/**
+ * Service de credito.
+ */
 @Service
 public class CreditServiceImpl implements CreditService {
 
@@ -48,11 +47,12 @@ public class CreditServiceImpl implements CreditService {
   @Autowired
   @Qualifier("reactiveRedisTemplateCredit")
   private ReactiveRedisTemplate<String, Credit> redisTemplate;
+
   @Override
   public Flux<Credit> getAllCreditsService() {
     String cacheKey = "credit";
     Duration cacheDuration = Duration.ofSeconds(50);
-    return redisTemplate.opsForList().range(cacheKey,0, -1)
+    return redisTemplate.opsForList().range(cacheKey, 0, -1)
         .switchIfEmpty(
             creditRepository.findAll()
                 .flatMap(debitCard -> redisTemplate.opsForList().leftPushAll(cacheKey, debitCard)
@@ -77,7 +77,7 @@ public class CreditServiceImpl implements CreditService {
         .then(verifyValues(credit))
         .then(Mono.just(credit))
         .flatMap(creditFlux -> creditValidator.verifyCustomerExists(creditFlux.getCustomerId(), kafkaConsumerListener)
-            .flatMap(customerFound ->creditRepository.findByCustomerId(customerFound.get_id())
+            .flatMap(customerFound -> creditRepository.findByCustomerId(customerFound.get_id())
                 .collectList()
                 .flatMap(listCreditsByCustomer -> {
                   if (customerFound.getType().equalsIgnoreCase(TypeCustomer.PERSONA.toString())
@@ -125,9 +125,10 @@ public class CreditServiceImpl implements CreditService {
 
 
   @KafkaListener(topics = {"get-credits-bycustomer"}, groupId = "my-group-id")
-  public void listenerGetCreditsByCustomer(String message){
+  public void listenerGetCreditsByCustomer(String message) {
     Gson gson = new Gson();
-    Map<String, String> map = gson.fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
+    Map<String, String> map = gson.fromJson(message, new TypeToken<Map<String, String>>() {
+    }.getType());
     String customerId = map.get("customerId");
     Flux<Credit> getCredits = creditRepository.findByCustomerId(customerId);
     getCredits.collectList().subscribe(creditList -> {
@@ -135,12 +136,14 @@ public class CreditServiceImpl implements CreditService {
       kafkaTemplate.send("response-get-credits-bycustomer", jsonData);
     });
   }
+
   @KafkaListener(topics = {"has-card-debt"}, groupId = "my-group-id")
-  public void listenerGetHasCardDebt(String message){
+  public void listenerGetHasCardDebt(String message) {
     Gson gson = new Gson();
-    Map<String, String> map = gson.fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
+    Map<String, String> map = gson.fromJson(message, new TypeToken<Map<String, String>>() {
+    }.getType());
     String customerId = map.get("customerId");
-    Flux<Credit>creditFlux = creditRepository.findByCustomerId(customerId);
+    Flux<Credit> creditFlux = creditRepository.findByCustomerId(customerId);
     creditFlux
         .any(credit -> credit.getTypeCredit().equalsIgnoreCase(TypeCredit.TARJETA.toString()))
         .subscribe(aBoolean -> {

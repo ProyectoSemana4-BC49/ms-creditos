@@ -3,10 +3,10 @@ package com.nttdatabc.mscreditos.service;
 import static com.nttdatabc.mscreditos.utils.Constantes.EX_ERROR_NOT_CARD_CREDIT;
 
 import com.nttdatabc.mscreditos.config.kafka.KafkaConsumerListener;
-import com.nttdatabc.mscreditos.model.helpers.BalanceAccounts;
 import com.nttdatabc.mscreditos.model.MovementCredit;
-import com.nttdatabc.mscreditos.model.helpers.SummaryAccountBalance;
 import com.nttdatabc.mscreditos.model.enums.TypeCredit;
+import com.nttdatabc.mscreditos.model.helpers.BalanceAccounts;
+import com.nttdatabc.mscreditos.model.helpers.SummaryAccountBalance;
 import com.nttdatabc.mscreditos.repository.CreditRepository;
 import com.nttdatabc.mscreditos.repository.MovementRepository;
 import com.nttdatabc.mscreditos.service.interfaces.ReportService;
@@ -22,7 +22,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
+/**
+ * Service de reporte.
+ */
 @Service
 public class ReportServiceImpl implements ReportService {
 
@@ -36,6 +38,7 @@ public class ReportServiceImpl implements ReportService {
   private CreditValidator creditValidator;
   @Autowired
   private KafkaConsumerListener kafkaConsumerListener;
+
   @Override
   public Mono<BalanceAccounts> getBalanceAverageService(String customerId) {
     return creditValidator.verifyCustomerExists(customerId, kafkaConsumerListener)

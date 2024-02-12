@@ -1,5 +1,7 @@
 package com.nttdatabc.mscreditos.config.kafka;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,15 +13,15 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * kafka config consumer.
+ */
 @Configuration
 public class KakfaConsumerConfig {
   @Value("${spring.kafka.bootstrapServers}")
   private String bootstrapServers;
 
-  public Map<String, Object> consumerConfig(){
+  public Map<String, Object> consumerConfig() {
     Map<String, Object> properties = new HashMap<>();
     properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -28,11 +30,12 @@ public class KakfaConsumerConfig {
   }
 
   @Bean
-  public ConsumerFactory<String, String> consumerFactory(){
+  public ConsumerFactory<String, String> consumerFactory() {
     return new DefaultKafkaConsumerFactory<>(consumerConfig());
   }
+
   @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> consumer(){
+  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> consumer() {
     ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
     return factory;

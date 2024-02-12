@@ -4,8 +4,8 @@ package com.nttdatabc.mscreditos.controller;
 import static com.nttdatabc.mscreditos.utils.Constantes.PREFIX_PATH;
 
 import com.nttdatabc.mscreditos.controller.interfaces.ReportControllerApi;
-import com.nttdatabc.mscreditos.model.helpers.BalanceAccounts;
 import com.nttdatabc.mscreditos.model.MovementCredit;
+import com.nttdatabc.mscreditos.model.helpers.BalanceAccounts;
 import com.nttdatabc.mscreditos.service.ReportServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,10 +6,10 @@ import static com.nttdatabc.mscreditos.utils.MovementValidator.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nttdatabc.mscreditos.model.Credit;
-import com.nttdatabc.mscreditos.model.helpers.HasDebtResponse;
 import com.nttdatabc.mscreditos.model.MovementCredit;
-import com.nttdatabc.mscreditos.model.helpers.PaidInstallment;
 import com.nttdatabc.mscreditos.model.enums.StatusCredit;
+import com.nttdatabc.mscreditos.model.helpers.HasDebtResponse;
+import com.nttdatabc.mscreditos.model.helpers.PaidInstallment;
 import com.nttdatabc.mscreditos.repository.MovementRepository;
 import com.nttdatabc.mscreditos.service.interfaces.MovementService;
 import com.nttdatabc.mscreditos.utils.Utilitarios;
@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -171,9 +170,10 @@ public class MovementServiceImpl implements MovementService {
   }
 
   @KafkaListener(topics = {"has-debt-credit"}, groupId = "my-group-id")
-  public void listenerRequestHasDebt(String message){
+  public void listenerRequestHasDebt(String message) {
     Gson gson = new Gson();
-    Map<String, String> map = gson.fromJson(message, new TypeToken<Map<String, String>>(){}.getType());
+    Map<String, String> map = gson.fromJson(message, new TypeToken<Map<String, String>>() {
+    }.getType());
     String customerId = map.get("customerId");
     Mono<HasDebtResponse> hasDebtResponseMono = hasDebtCreditCustomerService(customerId);
     hasDebtResponseMono.subscribe(hasDebtResponse -> {

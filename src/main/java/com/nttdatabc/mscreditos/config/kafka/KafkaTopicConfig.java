@@ -1,14 +1,16 @@
 package com.nttdatabc.mscreditos.config.kafka;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.config.TopicConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * config topics kafka.
+ */
 @Configuration
 public class KafkaTopicConfig {
   @Bean
@@ -23,6 +25,7 @@ public class KafkaTopicConfig {
         .build();
 
   }
+
   @Bean
   public NewTopic generateTopicResponseHasDebt() {
     Map<String, String> configuration = new HashMap<>();
@@ -35,6 +38,7 @@ public class KafkaTopicConfig {
         .build();
 
   }
+
   @Bean
   public NewTopic generateTopicResponseHasCardDeb() {
     Map<String, String> configuration = new HashMap<>();
@@ -47,6 +51,7 @@ public class KafkaTopicConfig {
         .build();
 
   }
+
   @Bean
   public NewTopic generateTopicCustomerExistCredit() {
     Map<String, String> configuration = new HashMap<>();

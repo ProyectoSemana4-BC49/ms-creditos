@@ -2,7 +2,6 @@ package com.nttdatabc.mscreditos.utils;
 
 import com.google.gson.Gson;
 import com.nttdatabc.mscreditos.model.response.CustomerExt;
-
 import java.util.UUID;
 
 /**

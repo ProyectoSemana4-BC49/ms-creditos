@@ -1,7 +1,7 @@
 package com.nttdatabc.mscreditos.controller.interfaces;
 
-import com.nttdatabc.mscreditos.model.helpers.BalanceAccounts;
 import com.nttdatabc.mscreditos.model.MovementCredit;
+import com.nttdatabc.mscreditos.model.helpers.BalanceAccounts;
 import com.nttdatabc.mscreditos.utils.ApiUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,13 +31,13 @@ public interface ReportControllerApi {
    *
    * @param customerId ID del cliente (required)
    * @return Reporte de saldos promedios. (status code 200)
-   *         or Error en request (status code 400)
-   *         or Recurso no encontrado (status code 404)
+   * or Error en request (status code 400)
+   * or Recurso no encontrado (status code 404)
    */
   @Operation(
       operationId = "getBalanceCredit",
       summary = "Obtener resumen de saldos promedios del mes en curso de los productos crediticios.",
-      tags = { "Reportes" },
+      tags = {"Reportes"},
       responses = {
           @ApiResponse(responseCode = "200", description = "Reporte de saldos promedios.", content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = BalanceAccounts.class))
@@ -49,7 +49,7 @@ public interface ReportControllerApi {
   @RequestMapping(
       method = RequestMethod.GET,
       value = "/report_credit/balance/{customer_id}",
-      produces = { "application/json" }
+      produces = {"application/json"}
   )
   default ResponseEntity<Mono<BalanceAccounts>> getBalanceCredit(
       @Parameter(name = "customer_id", description = "ID del cliente", required = true, in = ParameterIn.PATH) @PathVariable("customer_id") String customerId,
@@ -67,18 +67,19 @@ public interface ReportControllerApi {
     return ResponseEntity.ok().build();
 
   }
+
   /**
    * GET /report_credit/last_movements_card_credit/{credit_id} : Obtener los ultimos 10 movimientos de la tarjeta de crédito.
    *
    * @param creditId ID del crédito (required)
    * @return Reporte de saldos promedios. (status code 200)
-   *         or Error en request (status code 400)
-   *         or Recurso no encontrado (status code 404)
+   * or Error en request (status code 400)
+   * or Recurso no encontrado (status code 404)
    */
   @Operation(
       operationId = "getLastMovementsCardCredit",
       summary = "Obtener los ultimos 10 movimientos de la tarjeta de crédito.",
-      tags = { "Reportes" },
+      tags = {"Reportes"},
       responses = {
           @ApiResponse(responseCode = "200", description = "Reporte de saldos promedios.", content = {
               @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MovementCredit.class)))
@@ -90,7 +91,7 @@ public interface ReportControllerApi {
   @RequestMapping(
       method = RequestMethod.GET,
       value = "/report_credit/last_movements_card_credit/{credit_id}",
-      produces = { "application/json" }
+      produces = {"application/json"}
   )
   default ResponseEntity<Flux<MovementCredit>> getLastMovementsCardCredit(
       @Parameter(name = "credit_id", description = "ID del crédito", required = true, in = ParameterIn.PATH) @PathVariable("credit_id") String creditId,

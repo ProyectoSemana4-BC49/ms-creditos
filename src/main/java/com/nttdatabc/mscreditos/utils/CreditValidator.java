@@ -11,14 +11,11 @@ import static com.nttdatabc.mscreditos.utils.Utilitarios.convertStrToCustomerExt
 import com.google.gson.Gson;
 import com.nttdatabc.mscreditos.config.kafka.KafkaConsumerListener;
 import com.nttdatabc.mscreditos.model.Credit;
-import com.nttdatabc.mscreditos.model.response.CustomerExt;
 import com.nttdatabc.mscreditos.model.enums.TypeCredit;
-
+import com.nttdatabc.mscreditos.model.response.CustomerExt;
 import com.nttdatabc.mscreditos.utils.exceptions.errors.ErrorResponseException;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -33,6 +30,7 @@ import reactor.core.publisher.Mono;
 public class CreditValidator {
   @Autowired
   private KafkaTemplate<String, String> kafkaTemplate;
+
   /**
    * Valida que los campos esenciales de un crédito no sean nulos.
    *
@@ -101,12 +99,12 @@ public class CreditValidator {
   /**
    * Verifica la existencia de un cliente mediante su ID.
    *
-   * @param customerId         El ID del cliente.
+   * @param customerId            El ID del cliente.
    * @param kafkaConsumerListener Implementación de la interfaz CustomerApiExt.
    * @return La información del cliente si existe.
    * @throws ErrorResponseException Si el cliente no existe.
    */
-  public  Mono<CustomerExt> verifyCustomerExists(String customerId, KafkaConsumerListener kafkaConsumerListener) {
+  public Mono<CustomerExt> verifyCustomerExists(String customerId, KafkaConsumerListener kafkaConsumerListener) {
     Map<String, String> request = new HashMap<>();
     request.put("customerId", customerId);
     Gson gson = new Gson();
