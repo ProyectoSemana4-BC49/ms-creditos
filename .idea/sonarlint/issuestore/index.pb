@@ -43,8 +43,6 @@ Isrc/main/java/com/nttdatabc/mscreditos/utils/exceptions/dto/ErrorDto.java,9\f\
 Ssrc/main/java/com/nttdatabc/mscreditos/utils/exceptions/GlobalExceptionHandler.java,4\e\4e1eea907b4501707850693a1e8261768d3bd88e
 u
 Esrc/test/java/com/nttdatabc/mscreditos/service/CreditServiceTest.java,6\a\6ad6a89ebcc17ecee7906268736388d543053915
-s
-Csrc/test/java/com/nttdatabc/mscreditos/service/MovementService.java,c\f\cfa5d4e4dd5987d4fc0e78a827581036b39491af
 w
 Gsrc/test/java/com/nttdatabc/mscreditos/service/MovementServiceTest.java,8\f\8f3731c5b5c0fe2e7426c6e8c83fb7db76406452
 …
