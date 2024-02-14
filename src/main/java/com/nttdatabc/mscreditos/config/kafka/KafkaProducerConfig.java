@@ -16,7 +16,7 @@ import org.springframework.kafka.core.ProducerFactory;
  */
 @Configuration
 public class KafkaProducerConfig {
-  @Value("${spring.kafka.bootstrapServers}")
+  @Value("${spring.kafka.bootstrap-servers}")
   private String bootstrapServers;
 
   public Map<String, Object> producerConfig() {
